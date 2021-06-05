@@ -6,3 +6,7 @@
                                 如果流使用的构造器是：FileWriter(file,true):不会对原有文件覆盖，而是在原有文件基础上追加内容
                                  如果流使用的构造器是：FileWriter(file,false) / FileWriter(file):对原有文件的覆盖
                                                 如果流使用的构造器是：FileWriter(file,true):不会对原有文件覆盖，而是在原有文件基础上追加内容
+
+        用的构造器是：FileWriter(file,false) / FileWriter(file):对原有文件的覆盖
+                                        如果流使用的构造器是：FileWriter(file,true):不会对原有文件覆盖，而是在原有文件基础上追加内容
+                                         如果流使用的构造器是：FileWriter(file,fa
