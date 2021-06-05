@@ -100,7 +100,7 @@ public class TestReadWriteClass {
         }
 
     }
-    //ceshiyong
+    //测试git用的注释
     @Test
     public void testCopyFileMethod(){
         FileReader fileReader = null;
