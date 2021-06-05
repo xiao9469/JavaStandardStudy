@@ -100,7 +100,7 @@ public class TestReadWriteClass {
         }
 
     }
-    //ceshi
+    //
     @Test
     public void testCopyFileMethod(){
         FileReader fileReader = null;
