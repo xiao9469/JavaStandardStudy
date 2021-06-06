@@ -1,4 +1,5 @@
 import com.obj.TestNormalObject;
+import com.obj.TestSerialVersionClass;
 import org.junit.Test;
 
 import java.io.*;
@@ -15,10 +16,12 @@ public class TestObjectStreamClass {
             objectInputStream = new ObjectInputStream(fileInputStream);
 
             String str = (String) objectInputStream.readObject();
-            char[] dataArr = (char[])objectInputStream.readObject();
+            //char[] dataArr = (char[])objectInputStream.readObject();
+            TestSerialVersionClass testSerialVersionObj = (TestSerialVersionClass) objectInputStream.readObject();
 
             System.out.println(str);
-            System.out.println(dataArr);
+            //System.out.println(dataArr);
+            System.out.println(testSerialVersionObj);
 
 
         } catch (IOException e) {
@@ -43,7 +46,7 @@ public class TestObjectStreamClass {
             objectOutputStream = new ObjectOutputStream(outputStream);
 
             objectOutputStream.writeObject(new String("fufufu"));
-            //objectOutputStream.writeObject(new TestNormalObject("UU", 66));
+            objectOutputStream.writeObject(new TestSerialVersionClass("LL", 11));
             objectOutputStream.writeObject(new char[]{'a','先','2'});
 
 

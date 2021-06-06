@@ -1,11 +1,23 @@
 package com.obj;
 
+import com.sun.org.apache.xml.internal.resolver.helpers.PublicId;
+
+import java.io.Serializable;
 import java.util.Comparator;
 
-public class TestNormalObject implements Comparable {
+public class TestNormalObject implements Comparable , Serializable {
 	String name ;
 	int ID ;
-	
+
+	@Override
+	public String toString() {
+		return "TestNormalObject{" +
+				"name='" + name + '\'' +
+				", ID=" + ID +
+				'}';
+	}
+
+	public static final long  serialVersionUID = -6632586151270989650L;
 	public TestNormalObject() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -46,14 +58,6 @@ public class TestNormalObject implements Comparable {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return
-				"{name='" + name + '\'' +
-				", ID=" + ID +
-				'}';
 	}
 
 	//按从小到大排序
