@@ -4,11 +4,31 @@ import org.junit.Test;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.Properties;
 
 
 public class TestReadWriteClass {
 
+    @Test
+    public void TestPropertiesMethod(){
+        File file = new File("Test.properties");
+        FileReader fileReader = null;
+        try {
+            fileReader = new FileReader(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Properties properties = new Properties();
+        try {
+            properties.load(fileReader);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        String s = properties.getProperty("name10");
+        System.out.println("name10: " + s);
+
+    }
     @Test
     public void TestReadWriteMethod(){
         FileReader fileReader = null;
