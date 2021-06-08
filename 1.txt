@@ -1,12 +1,2 @@
-
- 如果流使用的构造器是：FileWriter(file,false) / FileWriter(file):对原有文件的覆盖
-                如果流使用的构造器是：FileWriter(file,true):不会对原有文件覆盖，而是在原有文件基础上追加内容
-
-                 如果流使用的构造器是：FileWriter(file,false) / FileWriter(file):对原有文件的覆盖
-                                如果流使用的构造器是：FileWriter(file,true):不会对原有文件覆盖，而是在原有文件基础上追加内容
-                                 如果流使用的构造器是：FileWriter(file,false) / FileWriter(file):对原有文件的覆盖
-                                                如果流使用的构造器是：FileWriter(file,true):不会对原有文件覆盖，而是在原有文件基础上追加内容
-
-        用的构造器是：FileWriter(file,false) / FileWriter(file):对原有文件的覆盖
-                                        如果流使用的构造器是：FileWriter(file,true):不会对原有文件覆盖，而是在原有文件基础上追加内容
-                                         如果流使用的构造器是：FileWriter(file,fa
+Uni666abct test and refactor are two very important methods.
+单元���试和重构是两种非常重要的��法。

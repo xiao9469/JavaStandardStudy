@@ -1,3 +1,5 @@
+package com.obj;
+
 import com.obj.TestNormalObject;
 import com.obj.TestSerialVersionClass;
 import org.junit.Test;
