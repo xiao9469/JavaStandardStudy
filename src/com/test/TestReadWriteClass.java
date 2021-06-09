@@ -3,7 +3,6 @@ package com.test;
 import org.junit.Test;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.Properties;
 
 
@@ -11,7 +10,7 @@ public class TestReadWriteClass {
 
     @Test
     public void TestPropertiesMethod(){
-        File file = new File("Test.properties");
+        File file = new File("1.properties");
         FileReader fileReader = null;
         try {
             fileReader = new FileReader(file);

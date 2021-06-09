@@ -12,9 +12,9 @@ public class TestFileClass {
         //相对路径
         File file_1 = new File("hello.txt");
         //绝对路径
-        File file_2 = new File("E:\\IdeaItem\\test\\Test.properties");
+        File file_2 = new File("E:\\IdeaItem\\test\\1.properties");
         //动态分隔符
-        File file_3 = new File("E:"+File.separator+"IdeaItem"+File.separator+"test"+File.separator+"Test.properties");
+        File file_3 = new File("E:"+File.separator+"IdeaItem"+File.separator+"test"+File.separator+ "1.properties");
         //构造器2  参数一是主路径，参数二可以是文件可以是目录
         File file_4 = new File("E:\\IdeaItem","test");
         //构造器3
