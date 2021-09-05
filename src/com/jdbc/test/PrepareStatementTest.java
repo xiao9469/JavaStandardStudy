@@ -83,7 +83,7 @@ public class PrepareStatementTest {
             String url = pros.getProperty("url");
             String driverClass = pros.getProperty("driverClass");
 
-            // 2.加载驱动。
+            // 2.加载驱动。、。、
             Class.forName(driverClass);
 
             // 3.获取连接
