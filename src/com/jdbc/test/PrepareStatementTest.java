@@ -13,10 +13,63 @@ import java.util.Date;
 import java.util.Properties;
 
 public class PrepareStatementTest {
-
-
     @Test
-    public Customers QueryMethod(String sql,Object...args){
+    public void QueryMethodTest(){
+        String sql = "select id,name,email,birth from customers where id < ?";
+        Customers customers = QueryMethod(sql, 10);
+        System.out.println(customers);
+    }
+
+    public Customers queryForCustomers(String sql,Object...args){
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = JDBCUtils.getConnection();
+
+            ps = conn.prepareStatement(sql);
+            for(int i = 0;i < args.length;i++){
+                ps.setObject(i + 1, args[i]);
+            }
+
+            rs = ps.executeQuery();
+            //获取结果集的元数据 :ResultSetMetaData
+            ResultSetMetaData rsmd = rs.getMetaData();
+            //通过ResultSetMetaData获取结果集中的列数
+            int columnCount = rsmd.getColumnCount();
+
+            while (rs.next()){
+                Customers cust = new Customers();
+                //处理结果集一行数据中的每一个列
+                for(int i = 0;i <columnCount;i++){
+                    //获取列值
+                    Object columValue = rs.getObject(i + 1);
+
+                    //获取每个列的列名
+//					String columnName = rsmd.getColumnName(i + 1);
+                    String columnLabel = rsmd.getColumnLabel(i + 1);
+
+                    //给cust对象指定的columnName属性，赋值为columValue：通过反射
+                    Field field = Customers.class.getDeclaredField(columnLabel);
+                    field.setAccessible(true);
+                    field.set(cust, columValue);
+                }
+                return cust;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            JDBCUtils.closeResource(conn, ps, rs);
+
+        }
+
+        return null;
+
+
+    }
+
+    //@Test
+    public  Customers  QueryMethod(String sql,Object...args){
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
@@ -26,24 +79,28 @@ public class PrepareStatementTest {
             //预编译sql语句
             ps = connection.prepareStatement(sql);
             //填充占位符
-            ps.setObject(1, 1);
+            for(int i =0;i<args.length;i++){
+                ps.setObject(i+1, args[i]);
+            }
             //获取结果集
             resultSet = ps.executeQuery();
             //获取结果集的元数据
             ResultSetMetaData metaData = resultSet.getMetaData();
-            //通过结果集获取表的列数
+            //通过结果集 获取表的列数
             int columnCount = metaData.getColumnCount();
-            if (resultSet.next()){
+            while (resultSet.next()){
                 //创建customer对象
                 Customers customers = new Customers();
                 //处理一行结果中的每一个数据
                 for(int i =0;i<columnCount;i++){
-                    //获取i+1列的列名
-                    String colunmName = metaData.getColumnName(i+1);
-                    //获取i+1列的值
+                    //获取i+1列的列名【不推荐使用】   列名是跟元数据相关的
+                    //String colunmName = metaData.getColumnName(i+1);
+                    //获取i+1列的别名【√】
+                    String colunmLabelName = metaData.getColumnLabel(i+1);
+                    //获取i+1列的值     列值是跟数据集相关的
                     Object columnValue = resultSet.getObject(i+1);
                     //给column对象指定columnName属性
-                    Field field = Customers.class.getDeclaredField(colunmName);
+                    Field field = Customers.class.getDeclaredField(colunmLabelName);
                     field.setAccessible(true);
                     //将columnValue值放到columnName中并封装在customes对象里
                     field.set(customers, columnValue);
