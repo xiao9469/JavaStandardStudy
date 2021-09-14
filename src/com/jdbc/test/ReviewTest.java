@@ -21,7 +21,7 @@ public class ReviewTest {
                 System.out.println(o);
             }
         } catch (Exception e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
 
     }
