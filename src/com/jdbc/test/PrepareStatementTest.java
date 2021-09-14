@@ -2,18 +2,61 @@ package com.jdbc.test;
 
 
 import org.junit.Test;
+import sun.net.www.MeteredStream;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.lang.reflect.Field;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
 public class PrepareStatementTest {
 
+
+    @Test
+    public Customers QueryMethod(String sql,Object...args){
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        try {
+            //获取数据库连接
+            connection = JDBCUtils.getConnection();
+            //预编译sql语句
+            ps = connection.prepareStatement(sql);
+            //填充占位符
+            ps.setObject(1, 1);
+            //获取结果集
+            resultSet = ps.executeQuery();
+            //获取结果集的元数据
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            //通过结果集获取表的列数
+            int columnCount = metaData.getColumnCount();
+            if (resultSet.next()){
+                //创建customer对象
+                Customers customers = new Customers();
+                //处理一行结果中的每一个数据
+                for(int i =0;i<columnCount;i++){
+                    //获取i+1列的列名
+                    String colunmName = metaData.getColumnName(i+1);
+                    //获取i+1列的值
+                    Object columnValue = resultSet.getObject(i+1);
+                    //给column对象指定columnName属性
+                    Field field = Customers.class.getDeclaredField(colunmName);
+                    field.setAccessible(true);
+                    //将columnValue值放到columnName中并封装在customes对象里
+                    field.set(customers, columnValue);
+                }
+                return customers;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtils.closeResource(connection, ps, resultSet);
+        }
+        return null;
+    }
     //测试通用方法
     @Test
     public void commonMethodTest(){
@@ -83,7 +126,7 @@ public class PrepareStatementTest {
             String url = pros.getProperty("url");
             String driverClass = pros.getProperty("driverClass");
 
-            // 2.加载驱动。、。、
+            // 2.加载驱动
             Class.forName(driverClass);
 
             // 3.获取连接
