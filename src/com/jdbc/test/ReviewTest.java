@@ -13,6 +13,11 @@ import java.util.List;
 
 public class ReviewTest {
     @Test
+    public void insertLargeDateTestMethod(){
+        String sql = "INSERT INTO customers(id,name,email,photo) VALUES(30,'ab','111@111');";
+
+    }
+    @Test
     public void testMethod(){
         String sql = "select id,name,email,birth from customers where id < ?";
         try {
