@@ -13,6 +13,48 @@ import java.sql.ResultSet;
 
 public class BlogMethodTest {
     @Test
+    public void UpdateTX() throws Exception {
+        Connection connection = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            //取消数据的自动提交
+            connection.setAutoCommit(false);
+
+            String sql_1 = "update user_table set balance = balance-100 where user=?";
+            Update(connection, sql_1, "AA");
+            System.out.println(10/0);
+            String sql_2 = "update user_table set balance = balance+100 where user=?";
+            Update(connection, sql_2, "BB");
+            //提交数据
+            connection.commit();
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            connection.rollback();
+        } finally {
+            //涉及到数据库连接池的时候，需要把自动提交打开再还回去
+            connection.setAutoCommit(true);
+            JDBCUtils.closeResource(connection, null);
+        }
+    }
+    public void Update(Connection connection,String sql,Object ...args){
+        PreparedStatement preparedStatement = null ;
+        try {
+            //预编译sql语句
+            preparedStatement = connection.prepareStatement(sql);
+            //填充占位符
+            for (int i = 0; i<args.length; i++){
+                preparedStatement.setObject(i+1, args[i]);
+            }
+            //执行
+            preparedStatement.execute();
+            //关流
+            JDBCUtils.closeResource(null, preparedStatement);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
     public void MethodGetBlogTest() throws Exception {
         Connection connection = JDBCUtils.getConnection();
         String sql = "select id,name,email,birth,photo from customers where id = ?";
